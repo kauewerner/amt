@@ -17,6 +17,12 @@
 #include "config_defines.h"
 #include "tools/tools.h"
 #include "audio_proc/audio_proc.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+// struct used to create rec dir if non existent
+struct stat st = {0};
 
 // global miniaudio IO variables 
 ma_result result;
@@ -250,6 +256,11 @@ int main(int argc, char** argv)
     audioIoFlags->initialized = 0;
     audioIoFlags->ongoing = 0;
     audioIoFlags->finished = 0;
+
+    // Create a recording dir if non-existent
+    if (stat(REC_DIR, &st) == -1) {
+        mkdir(REC_DIR);
+    }
 
     // Get current date
     update_date(currentDate, MAX_OUTPUT_FILE_LENGTH);

@@ -22,10 +22,12 @@
 #define CONFIG_FILE_PATH "~/amt/amt.config"
 #define LOG_FILE_PATH "~/amt/recording_log.txt"
 #define OUTPUT_WAV_FILE_LABEL "~/amt/recs/rec_%Y-%m-%d_%H-%M-%S.wav"
+#define REC_DIR "~/amt/recs"
 #else
 #define CONFIG_FILE_PATH "./amt.config"
 #define LOG_FILE_PATH "./recording_log.txt"
 #define OUTPUT_WAV_FILE_LABEL "./recs/rec_%Y-%m-%d_%H-%M-%S.wav"
+#define REC_DIR "./recs"
 #endif
 
 #define DATE_ARRAY_SIZE 10
