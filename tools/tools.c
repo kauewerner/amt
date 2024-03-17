@@ -103,7 +103,9 @@ void set_config(const char* configFile, amt_config* config){
                 config->numberOfRecordingHours = count;
             }
             else {
+            #ifdef DEBUG
                 printf("Recording hours of the day:\n");
+            #endif
                 config->recordingHours = malloc(24 * sizeof(unsigned));
                 for(unsigned n = 0; n < 24; n++){
                     config->recordingHours[n] = n;

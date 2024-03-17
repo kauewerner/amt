@@ -27,13 +27,19 @@ sudo python3 i2smic.py
 ```
 sudo vim /etc/init.d/cpufrequtils
 ```
+```
 GOVERNOR="powersave"
-2B:
+```
+- For Raspberry Pi 2B:
+```
 MAX_SPEED="600"
 MIN_SPEED="600"
-pi zero:
+```
+- For Raspberry Pi Zero/W:
+```
 MAX_SPEED="700"
 MIN_SPEED="700"
+```
 
 - check sound card number:
 ```
@@ -44,14 +50,15 @@ arecord -l
 ```
 sudo vim /etc/asound.conf
 ```
+```
 pcm.!default {
- format SE32_LE
- rate 48000
- type hw
- card 0
- device 0
+    format SE32_LE
+    rate 48000
+    type hw
+    card 0
+    device 0
 }
-
+```
 - build the executable
 ```
 gcc main.c tools/tools.c audio_proc/audio_proc.c -o amt -ldl -lpthread -lm -latomic -lfftw3
@@ -66,6 +73,8 @@ gcc main.c tools/tools.c audio_proc/audio_proc.c -o amt -ldl -lpthread -lm -lato
 ```
 sudo vim /etc/rc.local
 ```
-sleep 45s && sudo ~/amt/amt &
+sleep 45s && sudo /home/pi/amt/amt &
+
 - maybe increase sleep time for 2B
-sleep 120s && sudo ~/amt/amt &
+
+sleep 120s && sudo /home/pi/amt/amt &
