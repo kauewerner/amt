@@ -15,8 +15,8 @@
 #ifndef CONFIG_DEFINES_H
 #define CONFIG_DEFINES_H
 
-#define DEBUG
-#define PC_TEST
+#define DEBUGx
+#define PC_TESTx
 
 #ifndef PC_TEST
 #define CONFIG_FILE_PATH "~/amt/amt.config"
