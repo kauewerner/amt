@@ -259,7 +259,11 @@ int main(int argc, char** argv)
 
     // Create a recording dir if non-existent
     if (stat(REC_DIR, &st) == -1) {
+    #ifdef PC_TEST
         mkdir(REC_DIR);
+    #else
+        mkdir(REC_DIR, 0777);
+    #endif
     }
 
     // Get current date
