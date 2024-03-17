@@ -268,7 +268,9 @@ int main(int argc, char** argv)
 
     // Get current date
     update_date(currentDate, MAX_OUTPUT_FILE_LENGTH);
+#ifdef DEBUG
     printf("-> Current date: %s\n", currentDate);
+#endif
 
     // Set main configuration settings
     amtConfig = malloc(sizeof(amt_config));

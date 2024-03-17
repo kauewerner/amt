@@ -19,10 +19,10 @@
 #define PC_TESTx
 
 #ifndef PC_TEST
-#define CONFIG_FILE_PATH "~/amt/amt.config"
-#define LOG_FILE_PATH "~/amt/recording_log.txt"
-#define OUTPUT_WAV_FILE_LABEL "~/amt/recs/rec_%Y-%m-%d_%H-%M-%S.wav"
-#define REC_DIR "~/amt/recs"
+#define CONFIG_FILE_PATH "/home/pi/amt/amt.config"
+#define LOG_FILE_PATH "/home/pi/amt/recording_log.txt"
+#define OUTPUT_WAV_FILE_LABEL "/home/pi/amt/recs/rec_%Y-%m-%d_%H-%M-%S.wav"
+#define REC_DIR "/home/pi/amt/recs"
 #else
 #define CONFIG_FILE_PATH "./amt.config"
 #define LOG_FILE_PATH "./recording_log.txt"
