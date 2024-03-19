@@ -1,80 +1,76 @@
 # amt
 
-- clone and install required packages
-```
-sudo apt-get -y update
-```
-```
-sudo apt-get -y upgrade
-```
-```
-sudo apt install -y git vim alsa-utils cpufrequtils libfftw3-dev python3-pip
-```
-```
-git clone https://github.com/mackron/miniaudio.git
-```
-```
-sudo pip3 install --upgrade adafruit-python-shell
-```
-```
-sudo wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2smic.py
-```
-```
-sudo python3 i2smic.py
-```
 
-- to set for boot:
+## Introduction
+
+This software tool was designed initially to be used in a low cost remote audio recording unit. The following hardware/software components are part of this unit where the tool was initially tested:
+- [Raspberry Pi Zero/Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero/)
+- [INMP441](https://invensense.tdk.com/wp-content/uploads/2015/02/INMP441.pdf) MEMS I2S [microphone module](https://www.bitsandparts.nl/INMP441-MEMS-I2S-Microfoon-module-p1924326?gad_source=1)
+- USB Powerbank (> 10000mAh)
+
+## Installation
+
+- install Raspberry Pi OS (Legacy, 32-bit) Lite using the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) in an SD card (> 4GB)
+- install git:
+```
+sudo apt install -y git
+```
+- clone the repository of this project:
+```
+git clone https://github.com/kauewerner/amt.git
+```
+- run the bash installation script:
+```
+cd amt
+sudo bash install_amt.sh
+```
+this will take a long time and the last step will be related to the installation of the [adafruit I2S package](https://makersportal.com/blog/recording-stereo-audio-on-a-raspberry-pi), which leads to keyboard input from terminal required by the user in two parts as shown below, where the last part will lead to a reboot:
+```
+This script downloads and installs
+I2S microphone support.
+
+RASPBERRY_PI_ZERO_W detected.
+
+Auto load module at boot? [y/n] y
+
+...
+
+install -m644 -b -D snd-i2smic-rpi.ko /lib/modules/6.1.21+/kernel/sound/drivers/snd-i2smic-rpi.ko
+depmod -a
+DONE.
+
+Settings take effect on next boot.
+
+REBOOT NOW? [Y/n]
+```
+- after the reboot is finished, set the CPU to run with the lowest clock by opening:
 ```
 sudo vim /etc/init.d/cpufrequtils
 ```
+and edit the following variables
 ```
 GOVERNOR="powersave"
-```
-- For Raspberry Pi 2B:
-```
-MAX_SPEED="600"
-MIN_SPEED="600"
-```
-- For Raspberry Pi Zero/W:
-```
 MAX_SPEED="700"
 MIN_SPEED="700"
 ```
+## Building
 
-- check sound card number:
-```
-arecord -l
-```
-
-- edit:
-```
-sudo vim /etc/asound.conf
-```
-```
-pcm.!default {
-    format SE32_LE
-    rate 48000
-    type hw
-    card 0
-    device 0
-}
-```
-- build the executable
+Final steps are related to building the amt executable:
+- to build the executable
 ```
 gcc main.c tools/tools.c audio_proc/audio_proc.c -o amt -ldl -lpthread -lm -latomic -lfftw3
 ```
-
-- test with DEBUG
+- to build the executable for debugging with gdb
 ```
-./amt
+gcc -g main.c tools/tools.c audio_proc/audio_proc.c -o amt -ldl -lpthread -lm -latomic -lfftw3
 ```
-
-- add to /etc/rc.local (before last exit line):
+- in order to have a quick debug test (without gdb) with printed messages one can use the DEBUG define which can be enabled in config_defines.h and rebuild
+- in order to set the executable to always start with boot (running as root), one can open the following file:
 ```
 sudo vim /etc/rc.local
 ```
+and add the following line before the last exit 0 line:
+```
 sleep 45s && sudo /home/pi/amt/amt &
-
-- maybe increase sleep time for 2B
-
-sleep 120s && sudo /home/pi/amt/amt &
+```
+this will make sure that the amt will run as root in the background everytime the RPI is powered on.
