@@ -165,6 +165,9 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
     else {
         if(!recFlags->ongoing && !audioIoFlags->finished){
             update_output_file_name(tmpOutputFileName, MAX_OUTPUT_FILE_LENGTH);
+        #ifdef DEBUG
+            printf("-> Updated rec output file name: %s\n", tmpOutputFileName);
+        #endif
             if (ma_encoder_init_file(tmpOutputFileName, &encoderConfig, &encoder) != MA_SUCCESS) {
                 printf("Failed to initialize output file.\n");
             }
