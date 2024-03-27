@@ -323,22 +323,34 @@ int main(int argc, char** argv)
         printf("Current month: %d\n", currentMonth);
         printf("First recording day: %d\n", firstRecordingDay);
     #endif
-        if(currentDay == firstRecordingDay && currentMonth == firstRecordingMonth){
-        #ifdef DEBUG
-            printf("Today is the starting day!\n");
-        #endif
-            runningFlag = 1;
-        } 
-        else {
-        #ifdef DEBUG
-            printf("Today is not the starting day! Checking again after %d minute(s)...\n", DATE_CHECK_TIME_IN_MINUTES);
-        #endif
-        #ifdef PC_TEST
-            Sleep((int)(DATE_CHECK_TIME_IN_MINUTES * 60 * 1000));
-        #else
-            sleep((int)(DATE_CHECK_TIME_IN_MINUTES * 60));
-        #endif
+        if(currentMonth >= firstRecordingMonth){
+            if(currentDay >= firstRecordingDay){
+            #ifdef DEBUG
+                printf("Today is the starting day!\n");
+            #endif
+                runningFlag = 1;
+            } 
+            else {
+            #ifdef DEBUG
+                printf("Today is not the starting day! Checking again after %d minute(s)...\n", DATE_CHECK_TIME_IN_MINUTES);
+            #endif
+            #ifdef PC_TEST
+                Sleep((int)(DATE_CHECK_TIME_IN_MINUTES * 60 * 1000));
+            #else
+                sleep((int)(DATE_CHECK_TIME_IN_MINUTES * 60));
+            #endif
+            }
         }
+        else {
+            #ifdef DEBUG
+                printf("Today is not the starting month! Checking again after 1 day...\n");
+            #endif
+            #ifdef PC_TEST
+                Sleep((int)(DATE_CHECK_TIME_IN_MINUTES * 60 * 60 * 24 * 1000));
+            #else
+                sleep((int)(DATE_CHECK_TIME_IN_MINUTES * 60 * 60 * 24));
+            #endif
+        } 
     }
     
     // If threshold-based rec mode is not enabled, start recs without threshold mode
