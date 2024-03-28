@@ -408,12 +408,16 @@ int main(int argc, char** argv)
                         printf("Stoping AMT since the last recording month is earlier than the current month...");
                     #endif
                     }
-                    currentDay = extract_info_from_date(currentDate, DAY);
-                    if(currentDay > lastRecordingDay){
-                        runningFlag = 0;
-                    #ifdef DEBUG
-                        printf("Stoping AMT since the last recording day is earlier than the current day...");
-                    #endif
+                    else{
+                        if(currentMonth == lastRecordingMonth){
+                            currentDay = extract_info_from_date(currentDate, DAY);
+                            if(currentDay > lastRecordingDay){
+                                runningFlag = 0;
+                            #ifdef DEBUG
+                                printf("Stoping AMT since the last recording day is earlier than the current day...");
+                            #endif
+                            }
+                        }
                     }
                 }
             }
