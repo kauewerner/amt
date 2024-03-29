@@ -24,9 +24,9 @@
  *
 */
 void set_config(const char* configFile, amt_config* config){
-    char line[TMP_CHAR_SIZE];
-    char label[TMP_CHAR_SIZE];
-    char stringValue[TMP_CHAR_SIZE];
+    char line[MAX_CHAR_LENGTH];
+    char label[MAX_CHAR_LENGTH];
+    char stringValue[MAX_CHAR_LENGTH];
     int numberValue;
     
     FILE* file = fopen(configFile, "r");
@@ -65,10 +65,10 @@ void set_config(const char* configFile, amt_config* config){
         if(!strcmp(label, "recordingHours")){
             sscanf(line, "%s\t%s\n", label, stringValue);
             if(strcmp(stringValue, "-")){
-                unsigned tmpHours[TMP_CHAR_SIZE];
+                unsigned tmpHours[MAX_CHAR_LENGTH];
                 unsigned count = 0;
                 unsigned twoDigitFlag = 0;
-                for(int n = 0; n < TMP_CHAR_SIZE; n++){
+                for(int n = 0; n < MAX_CHAR_LENGTH; n++){
                     if( stringValue[n] == '.' ){
                         break;
                     }
@@ -229,7 +229,7 @@ void update_output_file_name(char * ptr, unsigned size)
     struct tm *info;
     time( &rawtime );
     info = localtime( &rawtime );
-    char tmp[MAX_OUTPUT_FILE_LENGTH] = OUTPUT_WAV_FILE_DIR;
+    char tmp[MAX_CHAR_LENGTH] = OUTPUT_WAV_FILE_DIR;
 #ifdef PC_TEST
     strftime(ptr, size, strcat(strcat(tmp, DEVICE_NAME),OUTPUT_WAV_FILE_SUFFIX), info);
 #else

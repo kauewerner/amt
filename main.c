@@ -34,14 +34,11 @@ ma_encoder encoder;
 // path to input configuration file where parameters are read
 const char * configFileName = CONFIG_FILE_PATH;
 
-// path to log file where log will be written while running
-const char * logFileName = LOG_FILE_PATH;
-
 // temp output file name to be updated for each recording
-char tmpOutputFileName[MAX_OUTPUT_FILE_LENGTH];
+char tmpOutputFileName[MAX_CHAR_LENGTH];
 
 // current date to be updated while running
-char currentDate[MAX_OUTPUT_FILE_LENGTH];
+char currentDate[MAX_CHAR_LENGTH];
 
 // log file to write recording log
 FILE *logFile;
@@ -122,7 +119,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
         }
 
         if(recFlags->initialized){
-            update_output_file_name(tmpOutputFileName, MAX_OUTPUT_FILE_LENGTH);
+            update_output_file_name(tmpOutputFileName, MAX_CHAR_LENGTH);
 
             if (ma_encoder_init_file(tmpOutputFileName, &encoderConfig, &encoder) != MA_SUCCESS) {
                 printf("Failed to initialize output file.\n");
@@ -131,7 +128,8 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
             recFlags->initialized = 0;
             recFlags->ongoing = 1;
             // open log file
-            logFile = fopen(LOG_FILE_PATH, "a");
+            char logFileName[MAX_CHAR_LENGTH] = LOG_FILE_PATH;
+            logFile = fopen(strcat(strcat(logFileName, currentDate), ".txt"), "a");
         #ifdef DEBUG
             printf("New recording started due to RMS level = %.2f...\n",currentRMS);
         #endif
@@ -164,7 +162,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
     } 
     else {
         if(!recFlags->ongoing && !audioIoFlags->finished){
-            update_output_file_name(tmpOutputFileName, MAX_OUTPUT_FILE_LENGTH);
+            update_output_file_name(tmpOutputFileName, MAX_CHAR_LENGTH);
         #ifdef DEBUG
             printf("-> Updated rec output file name: %s\n", tmpOutputFileName);
         #endif
@@ -173,7 +171,8 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
             }
             recFlags->ongoing = 1;
             // open log file
-            logFile = fopen(LOG_FILE_PATH, "a");
+            char logFileName[MAX_CHAR_LENGTH] = LOG_FILE_PATH;
+            logFile = fopen(strcat(strcat(logFileName, currentDate), ".txt"), "a");
         #ifdef DEBUG
             printf("New recording started...\n");
             printf("-> Rec duration: %.2f min\n", amtConfig->recordDuration);
@@ -270,7 +269,7 @@ int main(int argc, char** argv)
     }
 
     // Get current date
-    update_date(currentDate, MAX_OUTPUT_FILE_LENGTH);
+    update_date(currentDate, MAX_CHAR_LENGTH);
 #ifdef DEBUG
     printf("-> Current date: %s\n", currentDate);
 #endif
@@ -400,7 +399,7 @@ int main(int argc, char** argv)
                 #endif
 
                     // check if current date is not later than last recording date
-                    update_date(currentDate, MAX_OUTPUT_FILE_LENGTH);
+                    update_date(currentDate, MAX_CHAR_LENGTH);
                     currentMonth = extract_info_from_date(currentDate, MONTH);
                     if(currentMonth > lastRecordingMonth){
                         runningFlag = 0;
@@ -440,7 +439,7 @@ int main(int argc, char** argv)
             }
 
             // check if current date is not later than last recording date
-            update_date(currentDate, MAX_OUTPUT_FILE_LENGTH);
+            update_date(currentDate, MAX_CHAR_LENGTH);
             currentMonth = extract_info_from_date(currentDate, MONTH);
             if(currentMonth > lastRecordingMonth){
                 runningFlag = 0;

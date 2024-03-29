@@ -22,7 +22,7 @@
 
 #ifdef PC_TEST
 #define CONFIG_FILE_PATH "./amt.config"
-#define LOG_FILE_PATH "./recording_log.txt"
+#define LOG_FILE_PATH "./recording_log_"
 #define OUTPUT_WAV_FILE_DIR "./recs/"
 #define OUTPUT_WAV_FILE_SUFFIX "_%Y-%m-%d_%H-%M-%S.wav"
 #define REC_DIR "./recs"
@@ -40,11 +40,10 @@
 #define DATE_MONTH_FIRST_DIGIT_INDEX 5
 #define DATE_LABEL "%Y-%m-%d"
 #define HPF_Q_FACTOR 0.707
-#define MAX_OUTPUT_FILE_LENGTH 80
+#define MAX_CHAR_LENGTH 100
 #define NUMBER_OF_BIQUAD_COEFFICIENTS 5
 #define NUMBER_OF_CALLBACK_SAMPLES 256
 #define NUMBER_OF_INPUT_CHANNELS 1
-#define TMP_CHAR_SIZE 100
 #define ZERO_CHAR_AS_INT 48
 
 #endif
