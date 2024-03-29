@@ -235,7 +235,7 @@ void update_output_file_name(char * ptr, unsigned size)
 #else
     char hostname[1024];
     gethostname(hostname,1024);
-    strftime(ptr, size, strcat(hostname, OUTPUT_WAV_FILE_SUFFIX), info);
+    strftime(ptr, size, strcat(strcat(tmp,hostname), OUTPUT_WAV_FILE_SUFFIX), info);
 #endif
 }
 

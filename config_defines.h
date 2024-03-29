@@ -28,7 +28,7 @@
 #define REC_DIR "./recs"
 #else
 #define CONFIG_FILE_PATH "/home/pi/amt/amt.config"
-#define LOG_FILE_PATH "/home/pi/amt/recording_log.txt"
+#define LOG_FILE_PATH "/home/pi/amt/recording_log_"
 #define OUTPUT_WAV_FILE_DIR "/home/pi/amt/recs/"
 #define OUTPUT_WAV_FILE_SUFFIX "_%Y-%m-%d_%H-%M-%S.wav"
 #define REC_DIR "/home/pi/amt/recs"
