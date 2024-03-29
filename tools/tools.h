@@ -17,6 +17,7 @@
 #include "../config_defines.h"
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
 
 /**
  * @brief AMT main configuration data struct

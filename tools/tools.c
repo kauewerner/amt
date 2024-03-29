@@ -229,7 +229,14 @@ void update_output_file_name(char * ptr, unsigned size)
     struct tm *info;
     time( &rawtime );
     info = localtime( &rawtime );
-    strftime(ptr, size, OUTPUT_WAV_FILE_LABEL, info);
+    char tmp[MAX_OUTPUT_FILE_LENGTH] = OUTPUT_WAV_FILE_DIR;
+#ifdef PC_TEST
+    strftime(ptr, size, strcat(strcat(tmp, DEVICE_NAME),OUTPUT_WAV_FILE_SUFFIX), info);
+#else
+    char hostname[1024];
+    gethostname(hostname,1024);
+    strftime(ptr, size, strcat(hostname, OUTPUT_WAV_FILE_SUFFIX), info);
+#endif
 }
 
 /**
