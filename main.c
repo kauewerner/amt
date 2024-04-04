@@ -326,7 +326,7 @@ int main(int argc, char** argv)
         printf("First recording day: %d\n", firstRecordingDay);
     #endif
         if(currentMonth >= firstRecordingMonth){
-            if(currentDay >= firstRecordingDay){
+            if(currentDay >= firstRecordingDay || firstRecordingMonth < currentMonth){
             #ifdef DEBUG
                 printf("Today is the starting day!\n");
             #endif
