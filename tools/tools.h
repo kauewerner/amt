@@ -16,6 +16,7 @@
 #define TOOLS_H
 #include "../config_defines.h"
 #include <time.h>
+#include <sys/time.h>
 #include <stdio.h>
 #include <unistd.h>
 
