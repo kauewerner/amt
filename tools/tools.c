@@ -231,11 +231,16 @@ void update_output_file_name(char * ptr, unsigned size)
     info = localtime( &rawtime );
     char tmp[MAX_CHAR_LENGTH] = OUTPUT_WAV_FILE_DIR;
 #ifdef PC_TEST
-    strftime(ptr, size, strcat(strcat(tmp, DEVICE_NAME),OUTPUT_WAV_FILE_SUFFIX), info);
+    strftime(ptr, size, strcat(strcat(strcat(tmp, DEVICE_NAME),OUTPUT_WAV_FILE_SUFFIX),".wav"), info);
 #else
     char hostname[1024];
     gethostname(hostname,1024);
-    strftime(ptr, size, strcat(strcat(tmp,hostname), OUTPUT_WAV_FILE_SUFFIX), info);
+    // strftime(ptr, size, strcat(strcat(tmp,hostname), OUTPUT_WAV_FILE_SUFFIX), info);
+    struct timeval tmnow;
+    char usec_buf[6];
+    gettimeofday(&tmnow, NULL);
+    sprintf(usec_buf,"%d",(int)tmnow.tv_usec);
+    strftime(ptr, size, strcat(strcat(strcat(strcat(tmp,hostname), OUTPUT_WAV_FILE_SUFFIX), usec_buf),".wav"), info);
 #endif
 }
 

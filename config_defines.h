@@ -15,25 +15,23 @@
 #ifndef CONFIG_DEFINES_H
 #define CONFIG_DEFINES_H
 
-#define DEVICE_NAME "rpi0n1"
-
 #define DEBUGx
 #define PC_TESTx
 
 #ifdef PC_TEST
+#define DEVICE_NAME "pc"
 #define CONFIG_FILE_PATH "./amt.config"
 #define LOG_FILE_PATH "./recording_log_"
 #define OUTPUT_WAV_FILE_DIR "./recs/"
-#define OUTPUT_WAV_FILE_SUFFIX "_%Y-%m-%d_%H-%M-%S.wav"
 #define REC_DIR "./recs"
 #else
 #define CONFIG_FILE_PATH "/home/pi/amt/amt.config"
 #define LOG_FILE_PATH "/home/pi/amt/recording_log_"
 #define OUTPUT_WAV_FILE_DIR "/home/pi/amt/recs/"
-#define OUTPUT_WAV_FILE_SUFFIX "_%Y-%m-%d_%H-%M-%S.wav"
 #define REC_DIR "/home/pi/amt/recs"
 #endif
 
+#define OUTPUT_WAV_FILE_SUFFIX "_%Y-%m-%d_%H-%M-%S-"
 #define DATE_ARRAY_SIZE 10
 #define DATE_CHECK_TIME_IN_MINUTES 1
 #define DATE_DAY_FIRST_DIGIT_INDEX 8
